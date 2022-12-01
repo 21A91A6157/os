@@ -1,0 +1,42 @@
+//fcfs
+#include<stdio.h>
+int main()
+{
+	int arrtime[10],start[10],fintime[10],wtime[10],bursttime[10],pn[10],tat[10],i,n;
+	int totalwtime=0,totaltot=0,avgtotalwt=0,avgtotaltot=0;
+	printf("enter no of processes:");
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+	{
+		printf(" enter pno arrivaltime bursttime ");
+		scanf("%d %d %d",&pn[i],&arrtime[i],&bursttime[i]);
+	}
+	for(i=0;i<n;i++)
+	{
+		if(i==0)
+		{
+			start[i]=arrtime[i];
+			fintime[i]=start[i]+bursttime[i];
+			wtime[i]=start[i]-arrtime[i];
+			tat[i]=fintime[i]-arrtime[i];
+		}
+		else
+		{
+			start[i]=fintime[i-1];
+			fintime[i]=fintime[i-1]+bursttime[i];
+			tat[i]=fintime[i]-arrtime[i];
+			wtime[i]=tat[i]-bursttime[i];
+		}
+	}
+	printf("\nPN Arrtime BurstTime Start WTime TAT FinishTime\n");
+	for(i=0;i<n;i++)
+	{
+		printf("%d       %d       %d      %d      %d      %d        %d\n",pn[i],arrtime[i],bursttime[i],start[i],wtime[i],tat[i],fintime[i]);
+		totalwtime=totalwtime+wtime[i];
+		totaltot=totaltot+tat[i];
+	}
+	avgtotalwt=totalwtime/n;
+	avgtotaltot=totaltot/n;
+	printf("\n average waiting time %f",(float)avgtotalwt);
+	printf("\n average turn around  time %f",(float)avgtotaltot);	 
+}
